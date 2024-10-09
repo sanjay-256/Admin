@@ -1,0 +1,92 @@
+import React, { useEffect, useState } from 'react';
+import { ref, get, remove } from 'firebase/database';
+import { database } from './firebaseConfig'; // Adjust path if necessary
+
+const DisplayData = () => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const ordersRef = ref(database, 'UserData');
+
+    const fetchData = async () => {
+      try {
+        const snapshot = await get(ordersRef);
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const formattedData = Object.keys(data).map(key => ({
+            id: key,
+            ...data[key]
+          }));
+          setOrders(formattedData);
+        } else {
+          console.log('No data available');
+        }
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError(err);
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const deleteOrder = async (orderId) => {
+    const orderRef = ref(database, `UserData/${orderId}`);
+
+    try {
+      await remove(orderRef);
+      setOrders(prevOrders => prevOrders.filter(order => order.id !== orderId));
+      console.log(`Order with ID ${orderId} has been deleted.`);
+    } catch (err) {
+      console.error('Error deleting order:', err);
+      setError(err);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching data: {error.message}</div>;
+  }
+
+  return (
+    <div className="container d-flex flex-wrap column-gap-4 row-gap-5 justify-content-center my-5">
+      <h1 className="text-center mb-4">Order List</h1>
+      {orders.length === 0 ? (
+        <p>No orders found.</p>
+      ) : (
+        orders.map(order => (
+          <div className="card" key={order.id} style={{ width: '18rem' }}>
+            <div className="card-body">
+              <h6>Items:</h6>
+              <ul className="bg-info-subtle">
+                {order.items.map((item, index) => (
+                  <li className="list-unstyled" key={index}>
+                    <p className="fw-semibold fs-5">
+                      <span className="fs-6">{item.name}</span>: {item.count} x ₹{item.rate}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              <div className="text-center">
+                <p className="card-text fw-bold my-auto fs-5 d-inline">Total: ₹{order.total}</p>
+                <button
+                  className="btn btn-danger float-end"
+                  onClick={() => deleteOrder(order.id)}>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default DisplayData;
