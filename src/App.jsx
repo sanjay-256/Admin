@@ -3,7 +3,9 @@ import Header from "./Header";
 import Home from "./Home";
 import DisplayData from './DisplayData';
 import AddItem from './AddItem';
-import DisplayItems from './assets/DisplayItems';
+import DisplayItems from './DisplayItems';
+import Cart from './Cart';
+import Order from './Order';
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
               <Route  path="/displaydata" element={<DisplayData/>}/>
               <Route  path="/additem" element={<AddItem/>}/>
               <Route  path="/displayitem" element={<DisplayItems/>}/>
+              <Route  path="/order" element={<Order/>}/>
             </Routes>
           </div>
         </BrowserRouter>
