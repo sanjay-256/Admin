@@ -67,17 +67,17 @@ const AddItem = () => {
   // Function to add or edit item
   const addItem = async (e) => {
     e.preventDefault();
-
+  
     if (!name || !amount || !id || !rating || !category || !description) {
       alert('Please fill out all fields and select an image.');
       return;
     }
-
+  
     setIsLoading(true);
-
+  
     try {
       let url = imageUrl;
-
+  
       // If a new image is selected, upload it to Firebase Storage
       if (image) {
         const storage = getStorage();
@@ -86,8 +86,8 @@ const AddItem = () => {
         url = await getDownloadURL(storageRef);
         setImageUrl(url);
       }
-
-      // Create or update the item data
+  
+      // Create the item data
       const itemData = {
         name,
         id,
@@ -98,18 +98,21 @@ const AddItem = () => {
         description,
         imageUrl: url,
       };
-
+  
       const db = getDatabase();
-
+  
       if (isEditMode && firebaseKey) {
         // Update the existing item in Firebase by Firebase key
         const itemRef = dbRef(db, `items/${firebaseKey}`);
         await update(itemRef, itemData);
         alert('Item updated successfully!');
       } else {
-        alert('Please enter a valid ID to edit.');
+        // Add a new item to Firebase
+        const itemsRef = dbRef(db, 'items');
+        await update(itemsRef, { [id]: itemData });  // Use the ID as the key for the new item
+        alert('Item added successfully!');
       }
-
+  
       // Reset the form after submission
       setName('');
       setId('');
@@ -128,6 +131,7 @@ const AddItem = () => {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className='d-flex justify-content-center align-items-center my-4 my-lg-3'>
@@ -178,15 +182,20 @@ const AddItem = () => {
         </div>
 
         <div className='my-2'>
-          <label className='form-label'>Category:</label>
-          <input
-            className='form-control text-capitalize'
-            type="text"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-          />
-        </div>
+  <label className='form-label'>Category:</label>
+  <select
+    className='form-control text-capitalize'
+    value={category}
+    onChange={(e) => setCategory(e.target.value)}
+    required
+  >
+    <option value="">Select a category</option>
+    <option value="breakfast">Breakfast</option>
+    <option value="lunch">Lunch</option>
+    <option value="snack">Snack</option>
+    <option value="dinner">Dinner</option>
+  </select>
+</div>
 
         <div className='my-2'>
           <label className='form-label'>Description:</label>

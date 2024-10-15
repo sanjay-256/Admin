@@ -97,13 +97,13 @@ const DisplayItems = () => {
         <p>No items available.</p> // Message when no items
       ) : (
         items.filter(item => !category || item.category === category).map((item) => (
-          <div key={item.id} className='border border-2 border-danger' style={{ width: '15rem' }}>
+          <div key={item.id} className='border border-2 border-danger card' style={{ width: '15rem' }}>
             <div className='m-2 text-center border rounded p-1' style={{ height: '150px' }}>
               {item.imageUrl && (
                 <img src={item.imageUrl} alt={item.name} className='img-fluid rounded' style={{ height: '100%' }} />
               )}
             </div>
-            <div className='ms-3'>
+            <div className='ms-3 card-body'>
               <p className='fw-medium fs-5'>Name: {item.name}</p>
               <div className='d-flex justify-content-between'>
                 <p className='fw-medium'>Amount: ₹{item.amount}</p>
@@ -112,7 +112,7 @@ const DisplayItems = () => {
               <p className='fw-medium'>Category: {item.category}</p>
               <p className='fw-medium'>Description: {item.description}</p>
             </div>
-            <div className="p-2 text-center">
+            <div className="p-2 text-center card-footer">
               {data.includes(item.id) ? (
                 <button className='btn btn-dark' onClick={() => removeItem(item)}>
                   <i className="bi bi-cart-plus pe-2 text-danger"></i>Remove from cart
