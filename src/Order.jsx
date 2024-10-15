@@ -75,6 +75,7 @@ const Order = () => {
             count: item.count,
           })),
           total,
+          createdAt: new Date().toISOString(),
     };
 
     try {

@@ -44,7 +44,6 @@ const DisplayData = () => {
   const deleteOrder = async (orderId) => {
     const orderRef = ref(database, `UserData/${orderId}`);
   
-    // Show a confirmation dialog before proceeding with the deletion
     const confirmDelete = window.confirm("Are you sure you want to delete this order?");
   
     if (!confirmDelete) {
@@ -60,9 +59,9 @@ const DisplayData = () => {
       setError(err);
     }
   };
-  
 
   const printBill = (order) => {
+    const Date = formatDate(order.createdAt);
     const billContent = `
       <html>
         <head>
@@ -80,7 +79,9 @@ const DisplayData = () => {
                 <h2 class="fw-bold">Kaimanam</h2>
               </div>
               <p class="mb-0 text-wrap" style="font-size: 13px;">12/9 Vadanoombal Salai, Parvathi Nagar, 2nd Street, Perumalagaram, Chennai, Tamil Nadu 600077</p>
-              <p>Phone: 1234567890</p>
+              <div class="d-flex gap-3 align-items-center justify-content-center">
+              <p>Phone_No: 1234567890</p><p class="fw-medium" style="font-size:13px;">${Date}</p>
+              </div>
             </div>
     
             <div class="text-danger fs-4 fw-bold">
@@ -128,8 +129,11 @@ const DisplayData = () => {
     newWindow.document.write(billContent);
     newWindow.document.close();
   };
-  
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -148,7 +152,9 @@ const DisplayData = () => {
           ) : (
             orders.map(order => (
               <div className="card border-2 border-dark" key={order.id} style={{ width: '25rem' }}>
-                <div className="card-top p-2 fw-medium">Items:</div>
+                <div className="card-top p-2 fw-medium">
+                  Items: <span className='float-end'> {formatDate(order.createdAt)}</span>
+                </div>
                 <div className="card-body bg-info-subtle">
                   <ul className="">
                     {order.items.map((item, index) => (
