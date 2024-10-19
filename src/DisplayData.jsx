@@ -70,6 +70,13 @@ const DisplayData = () => {
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
+          <style>
+            @media print {
+              .btn-print {
+                display: none;
+              }
+            }
+          </style>
         </head>
         <body>
           <div class="bill-content container p-3">
@@ -83,11 +90,11 @@ const DisplayData = () => {
               <p>Phone_No: 1234567890</p><p class="fw-medium" style="font-size:13px;">${Date}</p>
               </div>
             </div>
-    
+  
             <div class="text-danger fs-4 fw-bold">
               <h4 class="fw-bold text-center text-capitalize">kaimanam home foods</h4>
             </div>
-    
+  
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -108,16 +115,16 @@ const DisplayData = () => {
                 `).join('')}
               </tbody>
             </table>
-    
+  
             <div class="text-center fw-bold fs-5 mb-3">
               Total: ₹${order.total}
             </div>
-    
+  
             <div class="text-center">
               <p>********** Thank You **********</p>
             </div>
-    
-            <div class="text-center">
+  
+            <div class="text-center btn-print">
               <button onclick="window.print()" class="btn btn-primary">Print Bill</button>
             </div>
           </div>
@@ -129,6 +136,7 @@ const DisplayData = () => {
     newWindow.document.write(billContent);
     newWindow.document.close();
   };
+  
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
