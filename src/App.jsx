@@ -4,8 +4,8 @@ import Home from "./Home";
 import DisplayData from './DisplayData';
 import AddItem from './AddItem';
 import DisplayItems from './DisplayItems';
-import Cart from './Cart';
 import Order from './Order';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
