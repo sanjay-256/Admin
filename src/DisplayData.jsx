@@ -214,11 +214,13 @@ const DisplayData = () => {
                     ))}
                   </ul>
                 </div>
-                <div className="card-footer bg-white text-center">
+                <div className="card-footer bg-white text-center d-flex justify-content-between align-items-center flex-wrap">
                   <p className="card-text fw-bold my-auto fs-5 d-inline">Total: ₹{order.total}</p>
-                  <button className="btn btn-success float-end" onClick={() => editOrder(order)}>Edit</button>
-                  <button className="btn btn-danger float-end me-3" onClick={() => deleteOrder(order.id)}>Delete</button>
-                  <button className="btn btn-primary float-end me-3" onClick={() => printBill(order)}>Print</button>
+                  <div className='d-flex gap-3 align-items-center flex-wrap'>
+                  <button className="btn btn-success " onClick={() => editOrder(order)}>Edit</button>
+                  <button className="btn btn-danger " onClick={() => deleteOrder(order.id)}>Delete</button>
+                  <button className="btn btn-primary" onClick={() => printBill(order)}>Print</button>
+                  </div>
                 </div>
               </div>
             ))
