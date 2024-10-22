@@ -214,11 +214,11 @@ const DisplayData = () => {
                     ))}
                   </ul>
                 </div>
-                <div className="card-footer bg-white text-center d-flex justify-content-between align-items-center flex-wrap">
-                  <p className="card-text fw-bold my-auto fs-5 d-inline">Total: ₹{order.total}</p>
-                  <div className='d-flex gap-3 align-items-center flex-wrap'>
-                  <button className="btn btn-success " onClick={() => editOrder(order)}>Edit</button>
-                  <button className="btn btn-danger " onClick={() => deleteOrder(order.id)}>Delete</button>
+                <div className="card-footer bg-white text-center">
+                  <p className="card-text fw-bold mb-2 fs-5 d-inline-block">Total: ₹{order.total}</p>
+                  <div className='pt-2 border-top border-2 border-dark'>
+                  <button className="btn btn-success me-3" onClick={() => editOrder(order)}>Edit</button>
+                  <button className="btn btn-danger me-3" onClick={() => deleteOrder(order.id)}>Delete</button>
                   <button className="btn btn-primary" onClick={() => printBill(order)}>Print</button>
                   </div>
                 </div>
