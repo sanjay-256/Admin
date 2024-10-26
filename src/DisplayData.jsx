@@ -131,8 +131,8 @@ const DisplayData = () => {
                 <h2 class="fw-bold">Kaimanam</h2>
               </div>
               <p class="mb-0 text-wrap" style="font-size: 13px;">12/9 Vadanoombal Salai, Parvathi Nagar, 2nd Street, Perumalagaram, Chennai, Tamil Nadu 600077</p>
-              <div class="d-flex gap-3 align-items-center justify-content-center">
-              <p>Phone_No: 1234567890</p><p class="fw-medium" style="font-size:13px;">${Date}</p>
+              <div class="d-flex flex-wrap column-gap-3 row-gap-1 align-items-center justify-content-center">
+              <p class="mb-0">Phone_No: 1234567890</p><p class="fw-medium mb-0" style="font-size:13px;">${Date}</p>
               </div>
             </div>
   
